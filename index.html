@@ -1,527 +1,511 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.5">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本中部7日单线穿越之旅</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; scroll-behavior: smooth; }
+        .chart-container { position: relative; width: 100%; max-width: 500px; margin: 0 auto; height: 350px; max-height: 400px; }
+        .day-tab.active { background-color: #0f766e; color: white; border-color: #0f766e; }
+        .hide { display: none; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #route-map { z-index: 10; }
+    </style>
 </head>
-<body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="zh-CN"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;端午日本中部(线性穿越版)行程规划&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""&gt;&lt;/script&gt;</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; scroll-behavior: smooth; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.chart-container { position: relative; width: 100%; max-width: 500px; margin: 0 auto; height: 350px; max-height: 400px; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.day-tab.active { background-color: #0f766e; color: white; border-color: #0f766e; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.hide { display: none; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.fade-in { animation: fadeIn 0.4s ease-in-out; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>#route-map { z-index: 10; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body class="bg-stone-50 text-slate-800 antialiased selection:bg-teal-200 selection:text-teal-900"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;nav class="bg-teal-800 text-white shadow-lg sticky top-0 z-50"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex justify-between h-16 items-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex items-center space-x-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-2xl"&gt;🗻&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="font-bold text-lg tracking-wider"&gt;升龙道(线性穿越版)看板&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="hidden md:flex space-x-6 text-sm font-medium"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#overview" class="hover:text-teal-200 transition"&gt;概览&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#map-section" class="hover:text-teal-200 transition"&gt;路线地图&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#itinerary" class="hover:text-teal-200 transition"&gt;每日行程&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#booking-links" class="hover:text-teal-200 transition"&gt;直达预订&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="overview" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mb-6 flex justify-between items-start"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2"&gt;端午日本中部 7 日极致之旅&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-slate-500 text-lg"&gt;6月17日 - 6月23日 ｜ 富山 · 松本 · 高山 · 金泽&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded border border-orange-200"&gt;硬核单向穿越版&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-slate-700 leading-relaxed mb-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>本面板是此次端午出行的核心中枢。我们采用了高阶玩家的&lt;strong class="text-teal-700"&gt;【宅急便行李分离+单向线性穿越】&lt;/strong&gt;策略。D1 在富山将大行李直邮高山，D2-D3 背小包轻装上阵，一路不走回头路地跨越立山黑部与上高地两大神仙秘境，体验极致的风景变幻与效率。</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-stone-50 p-4 rounded-xl border border-stone-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-3xl mb-1"&gt;🧳&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="font-bold text-slate-800"&gt;2天1晚&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-xs text-slate-500"&gt;背包轻装徒步&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-stone-50 p-4 rounded-xl border border-stone-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-3xl mb-1"&gt;🏔️&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="font-bold text-slate-800"&gt;8种交通&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-xs text-slate-500"&gt;贯穿立山黑部全线&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-stone-50 p-4 rounded-xl border border-stone-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-3xl mb-1"&gt;🏯&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="font-bold text-slate-800"&gt;松本城&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-xs text-slate-500"&gt;解锁国宝天守阁&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-stone-50 p-4 rounded-xl border border-stone-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-3xl mb-1"&gt;🍱&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="font-bold text-slate-800"&gt;2大&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-xs text-slate-500"&gt;必吃美食(白虾/飞驒牛)&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="map-section" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-2xl font-bold text-slate-900 flex items-center mb-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="mr-2"&gt;🗺️&lt;/span&gt; 行程动态连线图 (加入松本)</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-slate-600 text-sm"&gt;绝对单向不绕路：富山 ➔ 立山黑部 ➔ 松本 ➔ 上高地 ➔ 高山 ➔ 金泽 ➔ 富山。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="route-map" class="w-full h-[400px] rounded-xl border border-stone-300 shadow-inner"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="itinerary" class="space-y-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-2xl font-bold text-slate-900 flex items-center mb-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="mr-2"&gt;🗓️&lt;/span&gt; 交互式每日日程</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-slate-600"&gt;包含全新现场购票巴士的&lt;strong&gt;推荐时刻表&lt;/strong&gt;，方便卡点换乘。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex overflow-x-auto space-x-2 pb-2 scrollbar-hide" id="day-tabs-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="day-content" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8 min-h-[450px]"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="booking-links" class="bg-teal-900 rounded-2xl shadow-sm border border-teal-800 p-6 md:p-8 text-white"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-2xl font-bold flex items-center mb-6 text-teal-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="mr-2"&gt;🔗&lt;/span&gt; 官方预订直达通道</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-lg font-bold border-b border-teal-700 pb-2 flex items-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="mr-2"&gt;🎫&lt;/span&gt; 交通票务</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;ul class="space-y-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;a href="https://tateyama-kurobe-webservice.jp/AlpenTour/html/VW001W0010.html?lang=en" target="_blank" class="block bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="font-bold text-teal-100 group-hover:text-white flex justify-between"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;立山黑部 WEB车票 (单程)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;↗&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="text-xs text-teal-300 mt-1"&gt;预约 富山→扇泽 单向穿越，指定出发时间&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;a href="https://www.highwaybus.com/gp/index" target="_blank" class="block bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="font-bold text-teal-100 group-hover:text-white flex justify-between"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;Highwaybus (浓飞巴士)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;↗&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="text-xs text-teal-300 mt-1"&gt;预订高山→金泽座位 (提前1个月开抢)&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;a href="https://www.westjr.co.jp/global/sc/ticket/" target="_blank" class="block bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="font-bold text-teal-100 group-hover:text-white flex justify-between"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;JR西日本/东日本 订票&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;↗&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="text-xs text-teal-300 mt-1"&gt;信浓大町→松本、金泽→富山(新干线)&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-lg font-bold border-b border-teal-700 pb-2 flex items-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="mr-2"&gt;🏨&lt;/span&gt; 住宿预订 (新版四地)</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 sm:grid-cols-2 gap-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="https://www.toyoko-inn.com/china/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-2 rounded-lg transition text-sm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="font-bold block text-teal-100"&gt;富山 (1晚)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs text-teal-300"&gt;东横INN 新干线口2号店&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="#" class="bg-teal-800 hover:bg-teal-700 p-2 rounded-lg transition text-sm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="font-bold block text-teal-100"&gt;松本 (1晚)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs text-teal-300"&gt;Dormy Inn 或 站前Richmond&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="https://www.tokyustay.co.jp/hotel/HT/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-2 rounded-lg transition text-sm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="font-bold block text-teal-100"&gt;高山 (2晚)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs text-teal-300"&gt;东急Stay 飞驒高山&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="https://www.hyatt.com/zh-CN/hotel/japan/hyatt-centric-kanazawa/kmqct" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-2 rounded-lg transition text-sm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="font-bold block text-teal-100"&gt;金泽 (1晚)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs text-teal-300"&gt;凯悦尚萃或日航&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-lg font-bold border-b border-teal-700 pb-2 flex items-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="mr-2"&gt;🏛️&lt;/span&gt; 景点官网 (信息查阅)</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 gap-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="https://www.alpen-route.com/cn/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition text-sm flex justify-between items-center group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;&lt;span class="font-bold block text-teal-100"&gt;立山黑部&lt;/span&gt;&lt;span class="text-xs text-teal-300"&gt;官方资讯/天气&lt;/span&gt;&lt;/div&gt;&lt;span class="text-teal-300 group-hover:text-white"&gt;↗&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="https://www.alpico.co.jp/tc/kamikochi/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition text-sm flex justify-between items-center group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;&lt;span class="font-bold block text-teal-100"&gt;ALPICO (松本-上高地)&lt;/span&gt;&lt;span class="text-xs text-teal-300"&gt;查询电车+巴士时刻&lt;/span&gt;&lt;/div&gt;&lt;span class="text-teal-300 group-hover:text-white"&gt;↗&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="https://www.nouhibus.co.jp/route_bus/kamikochi-line/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition text-sm flex justify-between items-center group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;&lt;span class="font-bold block text-teal-100"&gt;浓飞巴士 (上高地-高山)&lt;/span&gt;&lt;span class="text-xs text-teal-300"&gt;查询下山时刻表&lt;/span&gt;&lt;/div&gt;&lt;span class="text-teal-300 group-hover:text-white"&gt;↗&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid md:grid-cols-2 gap-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;section id="tasks" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-2xl font-bold text-slate-900 flex items-center mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="mr-2"&gt;✅&lt;/span&gt; 任务看板 (物流升级版)</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h2&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex items-center space-x-2 mb-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xl"&gt;🧳&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-lg font-bold text-slate-800"&gt;物流与酒店 (核心)&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="space-y-2 text-sm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="bg-stone-50 border border-stone-200 p-3 rounded-lg cursor-pointer transition flex items-center space-x-3 select-none" onclick="this.classList.toggle('line-through'); this.classList.toggle('opacity-50'); this.classList.toggle('bg-teal-50');"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-lg"&gt;📦&lt;/span&gt;&lt;span&gt;D1在富山酒店前台填写宅急便单子，将大行李寄至D3的高山酒店。&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="bg-stone-50 border border-stone-200 p-3 rounded-lg cursor-pointer transition flex items-center space-x-3 select-none" onclick="this.classList.toggle('line-through'); this.classList.toggle('opacity-50'); this.classList.toggle('bg-teal-50');"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-lg"&gt;🎒&lt;/span&gt;&lt;span&gt;准备一个20L-30L轻便双肩包，装入D2松本洗漱品及两天御寒衣物。&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex items-center space-x-2 mb-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xl"&gt;🎫&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-lg font-bold text-slate-800"&gt;交通准备&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="space-y-2 text-sm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="bg-stone-50 border border-stone-200 p-3 rounded-lg cursor-pointer transition flex items-center space-x-3 select-none" onclick="this.classList.toggle('line-through'); this.classList.toggle('opacity-50'); this.classList.toggle('bg-teal-50');"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-lg"&gt;🏔️&lt;/span&gt;&lt;span&gt;4月中旬抢订立山黑部WEB车票 (富山至扇泽，单程单向)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="bg-stone-50 border border-stone-200 p-3 rounded-lg cursor-pointer transition flex items-center space-x-3 select-none" onclick="this.classList.toggle('line-through'); this.classList.toggle('opacity-50'); this.classList.toggle('bg-teal-50');"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-lg"&gt;🚌&lt;/span&gt;&lt;span&gt;提前1个月预订 高山→金泽 浓飞巴士座位&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;section id="logistics" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-2xl font-bold text-slate-900 flex items-center mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="mr-2"&gt;💴&lt;/span&gt; 交通预算 (单向版)</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-slate-600 mb-4 text-sm"&gt;由于改走单向，无需购买往返票。包含行李邮寄费，总交通相关预算变更为约 27,000 日元。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="chart-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;canvas id="budgetChart"&gt;&lt;/canvas&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-stone-800 text-stone-400 py-6 text-center mt-12 text-sm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;端午行程协同面板 (线性穿越版) © 2026&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- Leaflet Map Initialization ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function initMap() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const map = L.map('route-map').setView([36.4, 137.4], 9);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>attribution: '&amp;copy; OpenStreetMap contributors',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>subdomains: 'abcd',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>maxZoom: 19</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}).addTo(map);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const locations = [</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ name: "富山站 (起点)", coords: [36.7010, 137.2113], iconColor: "#0f766e" },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ name: "立山黑部 (横穿点)", coords: [36.5786, 137.5960], iconColor: "#3b82f6" },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ name: "松本站 (D2住宿)", coords: [36.2307, 137.9710], iconColor: "#e11d48" }, // 松本</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ name: "上高地 (D3徒步)", coords: [36.2486, 137.6369], iconColor: "#10b981" },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ name: "高山站 (D3/D4住宿)", coords: [36.1413, 137.2520], iconColor: "#d97706" },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ name: "金泽站 (D5住宿)", coords: [36.5778, 136.6478], iconColor: "#eab308" }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const createCustomIcon = (color) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>return L.divIcon({</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>className: 'custom-pin',</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>html: `&lt;div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.4);"&gt;&lt;/div&gt;`,</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>iconSize: [14, 14], iconAnchor: [7, 7]</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>locations.forEach(loc =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>L.marker(loc.coords, { icon: createCustomIcon(loc.iconColor) }).addTo(map)</p>
-<p class="p1"><span class="Apple-converted-space">                 </span>.bindPopup(`&lt;strong style="font-family:-apple-system,sans-serif;"&gt;${loc.name}&lt;/strong&gt;`);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 完美的单向路线</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const routeCoordinates = [</p>
-<p class="p1"><span class="Apple-converted-space">                </span>locations[0].coords, // 富山</p>
-<p class="p1"><span class="Apple-converted-space">                </span>locations[1].coords, // 立山</p>
-<p class="p1"><span class="Apple-converted-space">                </span>locations[2].coords, // 扇泽下到松本</p>
-<p class="p1"><span class="Apple-converted-space">                </span>locations[3].coords, // 上高地</p>
-<p class="p1"><span class="Apple-converted-space">                </span>locations[4].coords, // 高山</p>
-<p class="p1"><span class="Apple-converted-space">                </span>locations[5].coords, // 金泽</p>
-<p class="p1"><span class="Apple-converted-space">                </span>locations[0].coords<span class="Apple-converted-space">  </span>// 回富山</p>
-<p class="p1"><span class="Apple-converted-space">            </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>L.polyline(routeCoordinates, {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>color: '#0f766e', weight: 3, dashArray: '8, 8', opacity: 0.7, lineJoin: 'round'</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}).addTo(map);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- Itinerary Data &amp; Logic ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const itineraryData = [</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>day: 1, date: "6月17日 (周三)", title: "出发与富山海鲜初体验", location: "北京 ✈️ 富山", accommodation: "富山站附近",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>content: `</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6 fade-in"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-stone-50 p-4 rounded-xl border-l-4 border-blue-500"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;✈️&lt;/span&gt; 航班与接驳&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-2 text-sm text-slate-700"&gt;【NH964】08:20 北京T3 -&gt; 12:55 羽田T3。&lt;br&gt;转机清关后，【NH319】16:25 羽田T2 -&gt; 17:30 富山机场。&lt;br&gt;乘大巴直达富山站办理入住。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-red-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🔥&lt;/span&gt; 核心物流任务 (务必今晚完成)&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-2 text-sm text-red-700 font-medium"&gt;在酒店前台填写 Yamato (黑猫宅急便) 运单，将大件行李箱直接寄往 Day 3 要入住的高山酒店。自己只留一个双肩包装明天的换洗衣物和冲锋衣！&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🍱&lt;/span&gt; 美食攻略&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-1 text-sm text-slate-700"&gt;晚餐直奔富山站内吃【白虾亭】炸白虾盖饭，或品尝富山的萤火鱿、富山黑拉面。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>`</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>day: 2, date: "6月18日 (周四)", title: "立山黑部全线穿越 (绝不回头)", location: "富山 🏔️ 扇泽 🚌 松本", accommodation: "松本站附近",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>content: `</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6 fade-in"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-stone-50 p-4 rounded-xl border-l-4 border-teal-500"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🏔️&lt;/span&gt; 山脉穿越路径 (约6小时)&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-2 text-sm text-slate-700 mb-2"&gt;一早从电铁富山站出发，无需携带沉重行李，轻装跨越日本屋脊，体验全线8种交通工具。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xs text-stone-500"&gt;富山 ➔ (电铁) ➔ 立山 ➔ (缆车/大巴) ➔ &lt;strong class="text-teal-700"&gt;室堂(雪墙/御库里池)&lt;/strong&gt; ➔ (无轨电车/高空缆车) ➔ &lt;strong class="text-teal-700"&gt;黑部水库&lt;/strong&gt; ➔ (电车) ➔ 扇泽&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🚌&lt;/span&gt; 下山后接驳：扇泽 -&gt; 松本&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-1 text-sm text-slate-700 mb-2"&gt;抵达长野侧的扇泽站后，需现场购买 Alpico 巴士票前往 JR 信浓大町站，再换乘电车去松本入住。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="bg-stone-100 p-3 rounded-lg text-sm text-slate-700"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;strong&gt;🚌 扇泽 -&gt; 信浓大町 巴士时刻 (参考)：&lt;/strong&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>常见下午班次：&lt;span class="font-mono"&gt;14:30 ➔ 15:05&lt;/span&gt; | &lt;span class="font-mono"&gt;15:35 ➔ 16:10&lt;/span&gt; | &lt;span class="font-mono"&gt;16:35 ➔ 17:10&lt;/span&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-stone-500"&gt;(票价约 1600 日元，车程约 35 分钟，无需预约)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="bg-stone-100 p-3 rounded-lg text-sm text-slate-700 mt-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;strong&gt;🚆 信浓大町 -&gt; 松本 (JR 大糸线)：&lt;/strong&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>到站后买票上车，车程约 1 小时直达松本站。</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🏯&lt;/span&gt; 夜游松本&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-1 text-sm text-slate-700"&gt;入住松本酒店后，可散步前往国宝【松本城】看夜景，品尝信州著名的荞麦面。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>`</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>day: 3, date: "6月19日 (周五)", title: "上高地进山与高山汇合", location: "松本 🚌 上高地 🚌 高山", accommodation: "高山站附近",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>content: `</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6 fade-in"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-stone-50 p-4 rounded-xl border-l-4 border-green-500"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🚌&lt;/span&gt; 松本 -&gt; 上高地进山&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-2 text-sm text-slate-700 mb-2"&gt;在松本站购买电车+巴士联票。先坐私铁到【新岛岛站】，出站换乘直达巴士进山。由于没有行李拖累，非常轻松。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="bg-stone-100 p-3 rounded-lg text-sm text-slate-700"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;strong&gt;电车+巴士衔接时刻 (参考)：&lt;/strong&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>早上班次：&lt;span class="font-mono"&gt;08:00出发 ➔ 09:35抵&lt;/span&gt; | &lt;span class="font-mono"&gt;08:44出发 ➔ 10:25抵&lt;/span&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>睡饱班次：&lt;span class="font-mono"&gt;10:10出发 ➔ 11:55抵&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🥾&lt;/span&gt; 上高地徒步路线&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-1 text-sm text-slate-700"&gt;在【大正池】下车起步 ➔ 田代桥 ➔ 河童桥 (午餐休息) ➔ 明神池 (吃嘉门次小屋盐烤岩鱼) ➔ 返回河童桥。全程 4-5 小时神仙秘境游。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-2 text-xs text-red-600 font-bold bg-red-50 p-2 rounded border border-red-100"&gt;⚠️ 核心必做：到达上高地巴士总站时，立刻去窗口换取前往【平汤温泉/高山】方向的回程巴士整理券！&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🚌&lt;/span&gt; 上高地 -&gt; 高山出山&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-1 text-sm text-slate-700 mb-2"&gt;徒步结束后，乘坐浓飞巴士下山至平汤温泉，换乘回高山。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="bg-stone-100 p-3 rounded-lg text-sm text-slate-700"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;strong&gt;🚌 浓飞巴士下山时刻 (参考)：&lt;/strong&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>常见下午班次：&lt;span class="font-mono"&gt;15:15出发&lt;/span&gt; | &lt;span class="font-mono"&gt;16:00出发&lt;/span&gt; | &lt;span class="font-mono"&gt;16:40出发&lt;/span&gt; | &lt;span class="font-mono"&gt;17:15出发&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-2 text-sm text-teal-700 font-bold"&gt;抵达高山酒店，和心爱的大行李箱顺利重逢！&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>`</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>day: 4, date: "6月20日 (周六)", title: "高山深度慢节奏体验", location: "高山 (全天)", accommodation: "高山站附近",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>content: `</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6 fade-in"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-stone-50 p-4 rounded-xl border-l-4 border-orange-400"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🏮&lt;/span&gt; 缓冲调整日：古镇漫步&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-2 text-sm text-slate-700"&gt;历经两天的特种兵跨山行程，今天安排极度放松的节奏，睡到自然醒。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;ul class="mt-2 text-sm text-slate-700 space-y-2 list-disc pl-5"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;上午&lt;/strong&gt;: 逛逛充满烟火气的&lt;strong&gt;宫川朝市&lt;/strong&gt;，参观江户时代官府【高山阵屋】。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;下午&lt;/strong&gt;: 漫步【高山三町古街】。逛酒造品尝在地清酒与柚子酒。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🥩&lt;/span&gt; 美食大赏：飞驒牛大餐&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;ul class="mt-2 text-sm text-slate-700 space-y-2 list-disc pl-5"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;古街小吃&lt;/strong&gt;: 必排【飛騨こって牛】或【重兵卫】的飞驒牛握寿司。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;晚餐大餐&lt;/strong&gt;: 去【味藏天国】或【丸明】吃飞驒牛顶级烧肉（昨日已经抵达高山，可以拜托前台帮忙预约今晚位置）。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>`</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>day: 5, date: "6月21日 (周日)", title: "感受加贺百万石的底蕴", location: "高山 🚌 金泽", accommodation: "金泽站周边",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>content: `</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6 fade-in"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-stone-50 p-4 rounded-xl border-l-4 border-yellow-500"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🚌&lt;/span&gt; 热门交通前往金泽&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-1 text-sm text-slate-700"&gt;&lt;span class="font-semibold"&gt;09:50&lt;/span&gt; 高山浓飞巴士中心 -&gt; &lt;span class="font-semibold"&gt;12:15&lt;/span&gt; 抵达金泽站。（约3600日元）。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🏯&lt;/span&gt; 游玩与美食路线&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;ul class="mt-2 text-sm text-slate-700 space-y-2 list-disc pl-5"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;下午&lt;/strong&gt;: 游览日本三大名园之一的【兼六园】与【金泽城公园】。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;傍晚&lt;/strong&gt;: 漫步【东茶屋街】，打卡金箔冰淇淋。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;晚餐推荐&lt;/strong&gt;: 找回转寿司品尝“白身鱼之王”喉黑鱼；或者吃当地特色的金泽关东煮。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>`</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>day: 6, date: "6月22日 (周一)", title: "金泽寻宝与傍晚启程", location: "金泽 🚄 富山 ✈️ 东京", accommodation: "羽田机场周边酒店",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>content: `</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6 fade-in"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🦀&lt;/span&gt; 上午：金泽的厨房&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mt-1 text-sm text-slate-700 mb-2"&gt;早起去【近江町市场】打卡豪华海鲜丼和现炸可乐饼（备好现金）！随后步行打卡【21世纪美术馆】（看著名的“游泳池”）。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-stone-50 p-4 rounded-xl border-l-4 border-indigo-500"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-slate-800 flex items-center"&gt;&lt;span class="mr-2"&gt;🧳&lt;/span&gt; 提着行李回富山&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;ul class="mt-2 text-sm text-slate-700 space-y-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;城际交通&lt;/strong&gt;: 下午游玩结束后，从金泽站乘坐北陆新干线直达富山站，只需23分钟，自由席即可。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;strong&gt;去机场&lt;/strong&gt;: 抵达富山站后，出站换乘 15:30 左右的机场大巴前往富山机场。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;li&gt;&lt;span class="font-semibold text-blue-700"&gt;航班起飞&lt;/span&gt;: 18:10 - 19:20 【NH322】 富山 -&gt; 羽田T2。&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>`</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>day: 7, date: "6月23日 (周二)", title: "圆满返程", location: "东京 ✈️ 北京", accommodation: "温暖的家",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>content: `</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6 fade-in flex flex-col items-center text-center mt-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-6xl mb-4"&gt;🏠&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 class="text-2xl font-bold text-slate-800"&gt;踏上归途&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-slate-600 max-w-md text-sm mt-2"&gt;睡到自然醒，直接从机场酒店前往航站楼办理登机。免税店最后补货，结束充实而极致的中部环线之旅。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-blue-50 text-blue-800 p-4 rounded-xl border border-blue-100 mt-4 w-full max-w-md"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="font-bold block text-lg mb-1"&gt;【NH961】&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;08:55 羽田T3 -&gt; 12:00 北京T3&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>`</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function renderTabs() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const container = document.getElementById('day-tabs-container');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>itineraryData.forEach((data, index) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const btn = document.createElement('button');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>btn.className = `day-tab whitespace-nowrap px-5 py-2 rounded-full border border-stone-300 font-medium text-sm transition focus:outline-none ${index === 0 ? 'active shadow-md' : 'bg-white text-slate-600 hover:bg-stone-100'}`;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>btn.innerText = `Day ${data.day}`;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>btn.onclick = () =&gt; selectDay(index, btn);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>container.appendChild(btn);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function selectDay(index, clickedBtn) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.querySelectorAll('.day-tab').forEach(btn =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>btn.classList.remove('active', 'shadow-md', 'bg-white', 'text-slate-600');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>btn.classList.add('bg-white', 'text-slate-600');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>clickedBtn.classList.remove('bg-white', 'text-slate-600');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>clickedBtn.classList.add('active', 'shadow-md');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const data = itineraryData[index];</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('day-content').innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="fade-in"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="border-b border-stone-100 pb-4 mb-5"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-teal-700 font-bold text-sm mb-1"&gt;${data.date}&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-extrabold text-slate-900"&gt;${data.title}&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex flex-wrap gap-3 mt-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="inline-flex items-center text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded"&gt;📍 ${data.location}&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="inline-flex items-center text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded"&gt;🏨 ${data.accommodation}&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>${data.content}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function initBudgetChart() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const ctx = document.getElementById('budgetChart').getContext('2d');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>new Chart(ctx, {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>type: 'doughnut',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['立山穿越 (~10000)', '扇泽-松本 (~2300)', '松本-上高地 (~3000)', '上高地-高山 (~2600)', '高山-金泽 (~3600)', '金泽-富山 (~3000)', '宅急便运费 (~2500)'],</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [{</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>label: '预算 (日元)',</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>data: [10000, 2300, 3000, 2600, 3600, 3000, 2500],</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>backgroundColor: ['#0f766e', '#e11d48', '#10b981', '#14b8a6', '#d97706', '#6366f1', '#64748b'],</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>borderWidth: 0, hoverOffset: 4</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}]</p>
-<p class="p1"><span class="Apple-converted-space">                </span>},</p>
-<p class="p1"><span class="Apple-converted-space">                </span>options: {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>responsive: true, maintainAspectRatio: false, cutout: '65%',</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>initMap();<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>renderTabs();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if(itineraryData.length &gt; 0) selectDay(0, document.querySelector('.day-tab'));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>initBudgetChart();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<body class="bg-stone-50 text-slate-800 antialiased selection:bg-teal-200 selection:text-teal-900">
+
+    <nav class="bg-teal-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">🗻</span>
+                    <span class="font-bold text-lg tracking-wider">日本中部7日单线穿越之旅</span>
+                </div>
+                <div class="hidden md:flex space-x-6 text-sm font-medium">
+                    <a href="#overview" class="hover:text-teal-200 transition">概览</a>
+                    <a href="#map-section" class="hover:text-teal-200 transition">路线地图</a>
+                    <a href="#itinerary" class="hover:text-teal-200 transition">每日行程</a>
+                    <a href="#booking-links" class="hover:text-teal-200 transition">直达预订</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <section id="overview" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8">
+            <div class="mb-6 flex justify-between items-start">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">日本中部7日单线穿越之旅</h1>
+                    <p class="text-slate-500 text-lg">6月17日 - 6月23日 ｜ 富山 · 松本 · 高山 · 金泽</p>
+                </div>
+                <span class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded border border-orange-200">硬核单向穿越版</span>
+            </div>
+            
+            <p class="text-slate-700 leading-relaxed mb-6">
+                本面板是此次端午出行的核心中枢。我们采用了高阶玩家的<strong class="text-teal-700">【宅急便行李分离+单向线性穿越】</strong>策略。D1 在富山将大行李直邮高山，D2-D3 背小包轻装上阵，一路不走回头路地跨越立山黑部与上高地两大神仙秘境，体验极致的风景变幻与效率。
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="bg-stone-50 p-4 rounded-xl border border-stone-100">
+                    <div class="text-3xl mb-1">🧳</div>
+                    <div class="font-bold text-slate-800">2天1晚</div>
+                    <div class="text-xs text-slate-500">背包轻装徒步</div>
+                </div>
+                <div class="bg-stone-50 p-4 rounded-xl border border-stone-100">
+                    <div class="text-3xl mb-1">🏔️</div>
+                    <div class="font-bold text-slate-800">8种交通</div>
+                    <div class="text-xs text-slate-500">贯穿立山黑部全线</div>
+                </div>
+                <div class="bg-stone-50 p-4 rounded-xl border border-stone-100">
+                    <div class="text-3xl mb-1">🏯</div>
+                    <div class="font-bold text-slate-800">松本城</div>
+                    <div class="text-xs text-slate-500">解锁国宝天守阁</div>
+                </div>
+                <div class="bg-stone-50 p-4 rounded-xl border border-stone-100">
+                    <div class="text-3xl mb-1">🍱</div>
+                    <div class="font-bold text-slate-800">2大</div>
+                    <div class="text-xs text-slate-500">必吃美食(白虾/飞驒牛)</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="map-section" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8">
+            <div class="mb-4">
+                <h2 class="text-2xl font-bold text-slate-900 flex items-center mb-2">
+                    <span class="mr-2">🗺️</span> 行程动态连线图 (加入松本)
+                </h2>
+                <p class="text-slate-600 text-sm">绝对单向不绕路：富山 ➔ 立山黑部 ➔ 松本 ➔ 上高地 ➔ 高山 ➔ 金泽 ➔ 富山。</p>
+            </div>
+            <div id="route-map" class="w-full h-[400px] rounded-xl border border-stone-300 shadow-inner"></div>
+        </section>
+
+        <section id="itinerary" class="space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900 flex items-center mb-2">
+                    <span class="mr-2">🗓️</span> 交互式每日日程
+                </h2>
+                <p class="text-slate-600">包含全新现场购票巴士的<strong>推荐时刻表</strong>，方便卡点换乘。</p>
+            </div>
+
+            <div class="flex overflow-x-auto space-x-2 pb-2 scrollbar-hide" id="day-tabs-container">
+            </div>
+
+            <div id="day-content" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8 min-h-[450px]">
+            </div>
+        </section>
+
+        <section id="booking-links" class="bg-teal-900 rounded-2xl shadow-sm border border-teal-800 p-6 md:p-8 text-white">
+            <h2 class="text-2xl font-bold flex items-center mb-6 text-teal-100">
+                <span class="mr-2">🔗</span> 官方预订直达通道
+            </h2>
+            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold border-b border-teal-700 pb-2 flex items-center">
+                        <span class="mr-2">🎫</span> 交通票务
+                    </h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="https://tateyama-kurobe-webservice.jp/AlpenTour/html/VW001W0010.html?lang=en" target="_blank" class="block bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition group">
+                                <div class="font-bold text-teal-100 group-hover:text-white flex justify-between">
+                                    <span>立山黑部 WEB车票 (单程)</span>
+                                    <span>↗</span>
+                                </div>
+                                <div class="text-xs text-teal-300 mt-1">预约 富山→扇泽 单向穿越，指定出发时间</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.highwaybus.com/gp/index" target="_blank" class="block bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition group">
+                                <div class="font-bold text-teal-100 group-hover:text-white flex justify-between">
+                                    <span>Highwaybus (浓飞巴士)</span>
+                                    <span>↗</span>
+                                </div>
+                                <div class="text-xs text-teal-300 mt-1">预订高山→金泽座位 (提前1个月开抢)</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.westjr.co.jp/global/sc/ticket/" target="_blank" class="block bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition group">
+                                <div class="font-bold text-teal-100 group-hover:text-white flex justify-between">
+                                    <span>JR西日本/东日本 订票</span>
+                                    <span>↗</span>
+                                </div>
+                                <div class="text-xs text-teal-300 mt-1">信浓大町→松本、金泽→富山(新干线)</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold border-b border-teal-700 pb-2 flex items-center">
+                        <span class="mr-2">🏨</span> 住宿预订 (新版四地)
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <a href="https://www.toyoko-inn.com/china/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-2 rounded-lg transition text-sm">
+                            <span class="font-bold block text-teal-100">富山 (1晚)</span>
+                            <span class="text-xs text-teal-300">东横INN 新干线口2号店</span>
+                        </a>
+                        <a href="#" class="bg-teal-800 hover:bg-teal-700 p-2 rounded-lg transition text-sm">
+                            <span class="font-bold block text-teal-100">松本 (1晚)</span>
+                            <span class="text-xs text-teal-300">Dormy Inn 或 站前Richmond</span>
+                        </a>
+                        <a href="https://www.tokyustay.co.jp/hotel/HT/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-2 rounded-lg transition text-sm">
+                            <span class="font-bold block text-teal-100">高山 (2晚)</span>
+                            <span class="text-xs text-teal-300">东急Stay 飞驒高山</span>
+                        </a>
+                        <a href="https://www.hyatt.com/zh-CN/hotel/japan/hyatt-centric-kanazawa/kmqct" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-2 rounded-lg transition text-sm">
+                            <span class="font-bold block text-teal-100">金泽 (1晚)</span>
+                            <span class="text-xs text-teal-300">凯悦尚萃或日航</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold border-b border-teal-700 pb-2 flex items-center">
+                        <span class="mr-2">🏛️</span> 景点官网 (信息查阅)
+                    </h3>
+                    <div class="grid grid-cols-1 gap-3">
+                        <a href="https://www.alpen-route.com/cn/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition text-sm flex justify-between items-center group">
+                            <div><span class="font-bold block text-teal-100">立山黑部</span><span class="text-xs text-teal-300">官方资讯/天气</span></div><span class="text-teal-300 group-hover:text-white">↗</span>
+                        </a>
+                        <a href="https://www.alpico.co.jp/tc/kamikochi/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition text-sm flex justify-between items-center group">
+                            <div><span class="font-bold block text-teal-100">ALPICO (松本-上高地)</span><span class="text-xs text-teal-300">查询电车+巴士时刻</span></div><span class="text-teal-300 group-hover:text-white">↗</span>
+                        </a>
+                        <a href="https://www.nouhibus.co.jp/route_bus/kamikochi-line/" target="_blank" class="bg-teal-800 hover:bg-teal-700 p-3 rounded-lg transition text-sm flex justify-between items-center group">
+                            <div><span class="font-bold block text-teal-100">浓飞巴士 (上高地-高山)</span><span class="text-xs text-teal-300">查询下山时刻表</span></div><span class="text-teal-300 group-hover:text-white">↗</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <section id="tasks" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-slate-900 flex items-center mb-4">
+                    <span class="mr-2">✅</span> 任务看板 (物流升级版)
+                </h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="text-xl">🧳</span>
+                            <h3 class="text-lg font-bold text-slate-800">物流与酒店 (核心)</h3>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-stone-50 border border-stone-200 p-3 rounded-lg cursor-pointer transition flex items-center space-x-3 select-none" onclick="this.classList.toggle('line-through'); this.classList.toggle('opacity-50'); this.classList.toggle('bg-teal-50');">
+                                <span class="text-lg">📦</span><span>D1在富山酒店前台填写宅急便单子，将大行李寄至D3的高山酒店。</span>
+                            </div>
+                            <div class="bg-stone-50 border border-stone-200 p-3 rounded-lg cursor-pointer transition flex items-center space-x-3 select-none" onclick="this.classList.toggle('line-through'); this.classList.toggle('opacity-50'); this.classList.toggle('bg-teal-50');">
+                                <span class="text-lg">🎒</span><span>准备一个20L-30L轻便双肩包，装入D2松本洗漱品及两天御寒衣物。</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="text-xl">🎫</span>
+                            <h3 class="text-lg font-bold text-slate-800">交通准备</h3>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-stone-50 border border-stone-200 p-3 rounded-lg cursor-pointer transition flex items-center space-x-3 select-none" onclick="this.classList.toggle('line-through'); this.classList.toggle('opacity-50'); this.classList.toggle('bg-teal-50');">
+                                <span class="text-lg">🏔️</span><span>4月中旬抢订立山黑部WEB车票 (富山至扇泽，单程单向)</span>
+                            </div>
+                            <div class="bg-stone-50 border border-stone-200 p-3 rounded-lg cursor-pointer transition flex items-center space-x-3 select-none" onclick="this.classList.toggle('line-through'); this.classList.toggle('opacity-50'); this.classList.toggle('bg-teal-50');">
+                                <span class="text-lg">🚌</span><span>提前1个月预订 高山→金泽 浓飞巴士座位</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="logistics" class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-slate-900 flex items-center mb-4">
+                    <span class="mr-2">💴</span> 交通预算 (单向版)
+                </h2>
+                <p class="text-slate-600 mb-4 text-sm">由于改走单向，无需购买往返票。包含行李邮寄费，总交通相关预算变更为约 27,000 日元。</p>
+                <div class="chart-container">
+                    <canvas id="budgetChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="bg-stone-800 text-stone-400 py-6 text-center mt-12 text-sm">
+        <p>端午行程协同面板 (线性穿越版) © 2026</p>
+    </footer>
+
+    <script>
+        // --- Leaflet Map Initialization ---
+        function initMap() {
+            const map = L.map('route-map').setView([36.4, 137.4], 9);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+
+            const locations = [
+                { name: "富山站 (起点)", coords: [36.7010, 137.2113], iconColor: "#0f766e" },
+                { name: "立山黑部 (横穿点)", coords: [36.5786, 137.5960], iconColor: "#3b82f6" },
+                { name: "松本站 (D2住宿)", coords: [36.2307, 137.9710], iconColor: "#e11d48" }, // 松本
+                { name: "上高地 (D3徒步)", coords: [36.2486, 137.6369], iconColor: "#10b981" },
+                { name: "高山站 (D3/D4住宿)", coords: [36.1413, 137.2520], iconColor: "#d97706" },
+                { name: "金泽站 (D5住宿)", coords: [36.5778, 136.6478], iconColor: "#eab308" }
+            ];
+
+            const createCustomIcon = (color) => {
+                return L.divIcon({
+                    className: 'custom-pin',
+                    html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.4);"></div>`,
+                    iconSize: [14, 14], iconAnchor: [7, 7]
+                });
+            };
+
+            locations.forEach(loc => {
+                L.marker(loc.coords, { icon: createCustomIcon(loc.iconColor) }).addTo(map)
+                 .bindPopup(`<strong style="font-family:-apple-system,sans-serif;">${loc.name}</strong>`);
+            });
+
+            // 完美的单向路线
+            const routeCoordinates = [
+                locations[0].coords, // 富山
+                locations[1].coords, // 立山
+                locations[2].coords, // 扇泽下到松本
+                locations[3].coords, // 上高地
+                locations[4].coords, // 高山
+                locations[5].coords, // 金泽
+                locations[0].coords  // 回富山
+            ];
+
+            L.polyline(routeCoordinates, {
+                color: '#0f766e', weight: 3, dashArray: '8, 8', opacity: 0.7, lineJoin: 'round'
+            }).addTo(map);
+        }
+
+        // --- Itinerary Data & Logic ---
+        const itineraryData = [
+            {
+                day: 1, date: "6月17日 (周三)", title: "出发与富山海鲜初体验", location: "北京 ✈️ 富山", accommodation: "富山站附近",
+                content: `
+                    <div class="space-y-6 fade-in">
+                        <div class="bg-stone-50 p-4 rounded-xl border-l-4 border-blue-500">
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">✈️</span> 航班与接驳</h4>
+                            <p class="mt-2 text-sm text-slate-700">【NH964】08:20 北京T3 -> 12:55 羽田T3。<br>转机清关后，【NH319】16:25 羽田T2 -> 17:30 富山机场。<br>乘大巴直达富山站办理入住。</p>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                            <h4 class="font-bold text-red-800 flex items-center"><span class="mr-2">🔥</span> 核心物流任务 (务必今晚完成)</h4>
+                            <p class="mt-2 text-sm text-red-700 font-medium">在酒店前台填写 Yamato (黑猫宅急便) 运单，将大件行李箱直接寄往 Day 3 要入住的高山酒店。自己只留一个双肩包装明天的换洗衣物和冲锋衣！</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🍱</span> 美食攻略</h4>
+                            <p class="mt-1 text-sm text-slate-700">晚餐直奔富山站内吃【白虾亭】炸白虾盖饭，或品尝富山的萤火鱿、富山黑拉面。</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                day: 2, date: "6月18日 (周四)", title: "立山黑部全线穿越 (绝不回头)", location: "富山 🏔️ 扇泽 🚌 松本", accommodation: "松本站附近",
+                content: `
+                    <div class="space-y-6 fade-in">
+                        <div class="bg-stone-50 p-4 rounded-xl border-l-4 border-teal-500">
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🏔️</span> 山脉穿越路径 (约6小时)</h4>
+                            <p class="mt-2 text-sm text-slate-700 mb-2">一早从电铁富山站出发，无需携带沉重行李，轻装跨越日本屋脊，体验全线8种交通工具。</p>
+                            <p class="text-xs text-stone-500">富山 ➔ (电铁) ➔ 立山 ➔ (缆车/大巴) ➔ <strong class="text-teal-700">室堂(雪墙/御库里池)</strong> ➔ (无轨电车/高空缆车) ➔ <strong class="text-teal-700">黑部水库</strong> ➔ (电车) ➔ 扇泽</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🚌</span> 下山后接驳：扇泽 -> 松本</h4>
+                            <p class="mt-1 text-sm text-slate-700 mb-2">抵达长野侧的扇泽站后，需现场购买 Alpico 巴士票前往 JR 信浓大町站，再换乘电车去松本入住。</p>
+                            <div class="bg-stone-100 p-3 rounded-lg text-sm text-slate-700">
+                                <strong>🚌 扇泽 -> 信浓大町 巴士时刻 (参考)：</strong><br>
+                                常见下午班次：<span class="font-mono">14:30 ➔ 15:05</span> | <span class="font-mono">15:35 ➔ 16:10</span> | <span class="font-mono">16:35 ➔ 17:10</span><br>
+                                <span class="text-xs text-stone-500">(票价约 1600 日元，车程约 35 分钟，无需预约)</span>
+                            </div>
+                            <div class="bg-stone-100 p-3 rounded-lg text-sm text-slate-700 mt-2">
+                                <strong>🚆 信浓大町 -> 松本 (JR 大糸线)：</strong><br>
+                                到站后买票上车，车程约 1 小时直达松本站。
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🏯</span> 夜游松本</h4>
+                            <p class="mt-1 text-sm text-slate-700">入住松本酒店后，可散步前往国宝【松本城】看夜景，品尝信州著名的荞麦面。</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                day: 3, date: "6月19日 (周五)", title: "上高地进山与高山汇合", location: "松本 🚌 上高地 🚌 高山", accommodation: "高山站附近",
+                content: `
+                    <div class="space-y-6 fade-in">
+                        <div class="bg-stone-50 p-4 rounded-xl border-l-4 border-green-500">
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🚌</span> 松本 -> 上高地进山</h4>
+                            <p class="mt-2 text-sm text-slate-700 mb-2">在松本站购买电车+巴士联票。先坐私铁到【新岛岛站】，出站换乘直达巴士进山。由于没有行李拖累，非常轻松。</p>
+                            <div class="bg-stone-100 p-3 rounded-lg text-sm text-slate-700">
+                                <strong>电车+巴士衔接时刻 (参考)：</strong><br>
+                                早上班次：<span class="font-mono">08:00出发 ➔ 09:35抵</span> | <span class="font-mono">08:44出发 ➔ 10:25抵</span><br>
+                                睡饱班次：<span class="font-mono">10:10出发 ➔ 11:55抵</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🥾</span> 上高地徒步路线</h4>
+                            <p class="mt-1 text-sm text-slate-700">在【大正池】下车起步 ➔ 田代桥 ➔ 河童桥 (午餐休息) ➔ 明神池 (吃嘉门次小屋盐烤岩鱼) ➔ 返回河童桥。全程 4-5 小时神仙秘境游。</p>
+                            <p class="mt-2 text-xs text-red-600 font-bold bg-red-50 p-2 rounded border border-red-100">⚠️ 核心必做：到达上高地巴士总站时，立刻去窗口换取前往【平汤温泉/高山】方向的回程巴士整理券！</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🚌</span> 上高地 -> 高山出山</h4>
+                            <p class="mt-1 text-sm text-slate-700 mb-2">徒步结束后，乘坐浓飞巴士下山至平汤温泉，换乘回高山。</p>
+                            <div class="bg-stone-100 p-3 rounded-lg text-sm text-slate-700">
+                                <strong>🚌 浓飞巴士下山时刻 (参考)：</strong><br>
+                                常见下午班次：<span class="font-mono">15:15出发</span> | <span class="font-mono">16:00出发</span> | <span class="font-mono">16:40出发</span> | <span class="font-mono">17:15出发</span>
+                            </div>
+                            <p class="mt-2 text-sm text-teal-700 font-bold">抵达高山酒店，和心爱的大行李箱顺利重逢！</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                day: 4, date: "6月20日 (周六)", title: "高山深度慢节奏体验", location: "高山 (全天)", accommodation: "高山站附近",
+                content: `
+                    <div class="space-y-6 fade-in">
+                        <div class="bg-stone-50 p-4 rounded-xl border-l-4 border-orange-400">
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🏮</span> 缓冲调整日：古镇漫步</h4>
+                            <p class="mt-2 text-sm text-slate-700">历经两天的特种兵跨山行程，今天安排极度放松的节奏，睡到自然醒。</p>
+                            <ul class="mt-2 text-sm text-slate-700 space-y-2 list-disc pl-5">
+                                <li><strong>上午</strong>: 逛逛充满烟火气的<strong>宫川朝市</strong>，参观江户时代官府【高山阵屋】。</li>
+                                <li><strong>下午</strong>: 漫步【高山三町古街】。逛酒造品尝在地清酒与柚子酒。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🥩</span> 美食大赏：飞驒牛大餐</h4>
+                            <ul class="mt-2 text-sm text-slate-700 space-y-2 list-disc pl-5">
+                                <li><strong>古街小吃</strong>: 必排【飛騨こって牛】或【重兵卫】的飞驒牛握寿司。</li>
+                                <li><strong>晚餐大餐</strong>: 去【味藏天国】或【丸明】吃飞驒牛顶级烧肉（昨日已经抵达高山，可以拜托前台帮忙预约今晚位置）。</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                day: 5, date: "6月21日 (周日)", title: "感受加贺百万石的底蕴", location: "高山 🚌 金泽", accommodation: "金泽站周边",
+                content: `
+                    <div class="space-y-6 fade-in">
+                        <div class="bg-stone-50 p-4 rounded-xl border-l-4 border-yellow-500">
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🚌</span> 热门交通前往金泽</h4>
+                            <p class="mt-1 text-sm text-slate-700"><span class="font-semibold">09:50</span> 高山浓飞巴士中心 -> <span class="font-semibold">12:15</span> 抵达金泽站。（约3600日元）。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🏯</span> 游玩与美食路线</h4>
+                            <ul class="mt-2 text-sm text-slate-700 space-y-2 list-disc pl-5">
+                                <li><strong>下午</strong>: 游览日本三大名园之一的【兼六园】与【金泽城公园】。</li>
+                                <li><strong>傍晚</strong>: 漫步【东茶屋街】，打卡金箔冰淇淋。</li>
+                                <li><strong>晚餐推荐</strong>: 找回转寿司品尝“白身鱼之王”喉黑鱼；或者吃当地特色的金泽关东煮。</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                day: 6, date: "6月22日 (周一)", title: "金泽寻宝与傍晚启程", location: "金泽 🚄 富山 ✈️ 东京", accommodation: "羽田机场周边酒店",
+                content: `
+                    <div class="space-y-6 fade-in">
+                        <div>
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🦀</span> 上午：金泽的厨房</h4>
+                            <p class="mt-1 text-sm text-slate-700 mb-2">早起去【近江町市场】打卡豪华海鲜丼和现炸可乐饼（备好现金）！随后步行打卡【21世纪美术馆】（看著名的“游泳池”）。</p>
+                        </div>
+                        <div class="bg-stone-50 p-4 rounded-xl border-l-4 border-indigo-500">
+                            <h4 class="font-bold text-slate-800 flex items-center"><span class="mr-2">🧳</span> 提着行李回富山</h4>
+                            <ul class="mt-2 text-sm text-slate-700 space-y-2">
+                                <li><strong>城际交通</strong>: 下午游玩结束后，从金泽站乘坐北陆新干线直达富山站，只需23分钟，自由席即可。</li>
+                                <li><strong>去机场</strong>: 抵达富山站后，出站换乘 15:30 左右的机场大巴前往富山机场。</li>
+                                <li><span class="font-semibold text-blue-700">航班起飞</span>: 18:10 - 19:20 【NH322】 富山 -> 羽田T2。</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                day: 7, date: "6月23日 (周二)", title: "圆满返程", location: "东京 ✈️ 北京", accommodation: "温暖的家",
+                content: `
+                    <div class="space-y-6 fade-in flex flex-col items-center text-center mt-8">
+                        <div class="text-6xl mb-4">🏠</div>
+                        <h4 class="text-2xl font-bold text-slate-800">踏上归途</h4>
+                        <p class="text-slate-600 max-w-md text-sm mt-2">睡到自然醒，直接从机场酒店前往航站楼办理登机。免税店最后补货，结束充实而极致的中部环线之旅。</p>
+                        <div class="bg-blue-50 text-blue-800 p-4 rounded-xl border border-blue-100 mt-4 w-full max-w-md">
+                            <span class="font-bold block text-lg mb-1">【NH961】</span>
+                            <span>08:55 羽田T3 -> 12:00 北京T3</span>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        function renderTabs() {
+            const container = document.getElementById('day-tabs-container');
+            itineraryData.forEach((data, index) => {
+                const btn = document.createElement('button');
+                btn.className = `day-tab whitespace-nowrap px-5 py-2 rounded-full border border-stone-300 font-medium text-sm transition focus:outline-none ${index === 0 ? 'active shadow-md' : 'bg-white text-slate-600 hover:bg-stone-100'}`;
+                btn.innerText = `Day ${data.day}`;
+                btn.onclick = () => selectDay(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectDay(index, clickedBtn) {
+            document.querySelectorAll('.day-tab').forEach(btn => {
+                btn.classList.remove('active', 'shadow-md', 'bg-white', 'text-slate-600');
+                btn.classList.add('bg-white', 'text-slate-600');
+            });
+            clickedBtn.classList.remove('bg-white', 'text-slate-600');
+            clickedBtn.classList.add('active', 'shadow-md');
+
+            const data = itineraryData[index];
+            document.getElementById('day-content').innerHTML = `
+                <div class="fade-in">
+                    <div class="border-b border-stone-100 pb-4 mb-5">
+                        <div class="text-teal-700 font-bold text-sm mb-1">${data.date}</div>
+                        <h3 class="text-2xl font-extrabold text-slate-900">${data.title}</h3>
+                        <div class="flex flex-wrap gap-3 mt-3">
+                            <span class="inline-flex items-center text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">📍 ${data.location}</span>
+                            <span class="inline-flex items-center text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">🏨 ${data.accommodation}</span>
+                        </div>
+                    </div>
+                    ${data.content}
+                </div>
+            `;
+        }
+
+        function initBudgetChart() {
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['立山穿越 (~10000)', '扇泽-松本 (~2300)', '松本-上高地 (~3000)', '上高地-高山 (~2600)', '高山-金泽 (~3600)', '金泽-富山 (~3000)', '宅急便运费 (~2500)'],
+                    datasets: [{
+                        label: '预算 (日元)',
+                        data: [10000, 2300, 3000, 2600, 3600, 3000, 2500],
+                        backgroundColor: ['#0f766e', '#e11d48', '#10b981', '#14b8a6', '#d97706', '#6366f1', '#64748b'],
+                        borderWidth: 0, hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '65%',
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initMap(); 
+            renderTabs();
+            if(itineraryData.length > 0) selectDay(0, document.querySelector('.day-tab'));
+            initBudgetChart();
+        });
+    </script>
 </body>
 </html>
